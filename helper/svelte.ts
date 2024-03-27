@@ -1,14 +1,13 @@
 import { writable } from 'svelte/store'
 import type { Writable } from 'svelte/store'
-import type { IContextBridgeAPI } from './shared'
+import type { IContextBridgeAPI } from '../dist/index'
 
 // Helper for svelte store
 export function createSyncedWritable<T, K extends keyof T>(
+  esssApi: IContextBridgeAPI<T>,
   key: K,
   defaultValue: T[K]
 ): Writable<T[K]> {
-  const esssApi = window.esss as IContextBridgeAPI<T>
-
   const { subscribe, set, update } = writable<T[K]>(defaultValue, (set) => {
     esssApi.subscribe(key, (value) => {
       set(value)

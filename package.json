@@ -13,6 +13,16 @@
     },
     "./svelte": "./helper/svelte.ts"
   },
+  "typesVersions": {
+    "*": {
+      "dist": [
+        "./dist/index.d.ts"
+      ],
+      "svelte": [
+        "./helper/svelte.ts"
+      ]
+    }
+  },
   "files": [
     "dist",
     "helper"
