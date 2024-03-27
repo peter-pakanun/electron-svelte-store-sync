@@ -1,7 +1,7 @@
 {
   "name": "electron-svelte-store-sync",
   "version": "1.0.0",
-  "description": "A Node.js library starter",
+  "description": "A svelte store that can be synced between each electron browser window.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -33,6 +33,13 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run lint && tsup src/index.ts --dts --format cjs,esm"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peter-pakanun/electron-svelte-store-sync.git"
+  },
+  "author": "Peter Pakanun",
+  "license": "MIT",
+  "homepage": "https://github.com/peter-pakanun/electron-svelte-store-sync#readme",
   "devDependencies": {
     "@types/node": "^16.18.14",
     "@typescript-eslint/eslint-plugin": "^5.54.1",

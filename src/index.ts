@@ -1,5 +1,7 @@
 import { EventEmitter } from 'events'
 import { ipcMain, ipcRenderer } from 'electron'
+import { writeFile } from 'fs/promises'
+import { statSync, readFileSync } from 'fs'
 
 interface IKeyValue {
   [key: string]: unknown
@@ -53,9 +55,25 @@ export class ElectronSvelteStoreSync<T extends IKeyValue> extends EventEmitter {
 
   constructor(namespace = '', storePath?: string) {
     super()
+
     this.storePath = storePath
     this.store = {} as T
     this.namespace = namespace
+
+    if (storePath) {
+      // check if file already exists
+      const stats = statSync(storePath)
+      if (stats.isDirectory()) {
+        throw new Error('Store path is a directory')
+      } else if (stats.isFile()) {
+        // read the file
+        const json = readFileSync(storePath, 'utf8')
+        this.store = JSON.parse(json) as T
+      } else {
+        // create the file
+        this.save()
+      }
+    }
 
     ipcMain.handle(`${this.namespace}-get`, async (_event, key) => {
       return this.get(key)
@@ -97,7 +115,9 @@ export class ElectronSvelteStoreSync<T extends IKeyValue> extends EventEmitter {
   }
 
   public async save(): Promise<void> {
-    throw new Error('Method not implemented.')
+    if (!this.storePath) return
+    const json = JSON.stringify(this.store, null, 2)
+    await writeFile(this.storePath, json)
   }
 }
 
