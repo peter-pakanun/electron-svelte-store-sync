@@ -1,6 +1,6 @@
 {
   "name": "electron-svelte-store-sync",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A svelte store that can be synced between each electron browser window.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -31,7 +31,8 @@
     "format": "prettier --write .",
     "lint": "eslint --ext .ts src/**",
     "typecheck": "tsc --noEmit",
-    "build": "npm run lint && tsup src/index.ts --dts --format cjs,esm"
+    "build": "npm run lint && tsup src/index.ts --dts --format cjs,esm",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
